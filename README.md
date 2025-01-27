@@ -1,5 +1,7 @@
 # README
 
+
+- Proyecto creado por estudiantes, el enlace del proyecto original se encuentra en https://github.com/luiis02/DGP
 ## Descripción
 
 Este repositorio contiene el proyecto que incluye una aplicación bautizada como GranadAccess, desarrollada por el equipo SambaDevs
