@@ -21,10 +21,6 @@ def peticion():
             return jsonify({'error': 'Todos los campos son obligatorios.'}), 400
         
         for material in materiales: 
-            print(material)
-            print(profesor_id)
-            print(fecha_entrega)
-            print(alumno_id)
         # Insertar la solicitud en la base de datos
             query = """INSERT INTO SOLICITUD_MATERIAL (profesor_id, alumno_id, material, fecha_entrega) 
                         VALUES (%s, %s, %s, %s)"""

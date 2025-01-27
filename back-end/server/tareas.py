@@ -198,7 +198,7 @@ def crear_juego():
             return jsonify({"error": "Error al almacenar el juego"}), 500
 
     except Exception as e:
-        print(f"Error interno del servidor: {e}")
+        print(f"Error interno del servidor: {e}", e)
         return jsonify({"error": "Error interno del servidor"}), 500
     
 @tareasBP.route('/juego', methods=['GET'])
@@ -207,7 +207,6 @@ def obtener_juegos():
     query = "SELECT id, url FROM TAREA_JUEGO"
     try: 
         juegos = db.fetch_query(query)  # fetch_query devuelve una lista de tuplas
-        print(juegos)  # Verificar el contenido recuperado
 
         # Convertir las tuplas en una lista de diccionarios con id y url
         juegos_list = [{"id": juego[0], "url": juego[1]} for juego in juegos] if juegos else None
@@ -250,23 +249,32 @@ def obtener_solicitudes():
             JOIN SOLICITUD_MATERIAL_DETALLE smd ON sm.id = smd.solicitud_id
             JOIN MATERIALES_ALMACEN ma ON smd.id_material = ma.id_material
         """
-        solicitudes = db.fetch_query(query)
-        print(solicitudes)
+        solicitudes = db.fetch_query(query)  # Debe devolver una lista de tuplas o diccionarios
+
         if not solicitudes:
             return jsonify({"message": "No hay solicitudes registradas"}), 200
 
         # Organizar los resultados en un formato estructurado
         solicitudes_dict = {}
         for solicitud in solicitudes:
-            solicitud_id, profesor_nombre, aula, fecha_entrega, nombre_material, cantidad_solicitada = solicitud
+            # Desestructurar según el formato de los datos devueltos
+            solicitud_id = solicitud['solicitud_id']
+            profesor_nombre = solicitud['profesor_nombre']
+            aula = solicitud['aula']
+            fecha_entrega = solicitud['fecha_entrega']
+            nombre_material = solicitud['nombre_material']
+            cantidad_solicitada = solicitud['cantidad_solicitada']
+
+            # Agrupar materiales por solicitud
             if solicitud_id not in solicitudes_dict:
                 solicitudes_dict[solicitud_id] = {
                     "id": solicitud_id,
                     "profesor_nombre": profesor_nombre,
                     "aula": aula,
-                    "fecha_entrega": fecha_entrega,
+                    "fecha_entrega": str(fecha_entrega),  # Convertir a string para JSON
                     "materiales": []
                 }
+
             solicitudes_dict[solicitud_id]["materiales"].append({
                 "nombre_material": nombre_material,
                 "cantidad_solicitada": cantidad_solicitada
@@ -274,12 +282,12 @@ def obtener_solicitudes():
 
         # Convertir a una lista de solicitudes
         solicitudes_list = list(solicitudes_dict.values())
-        print(solicitudes_list)
 
         return jsonify(solicitudes_list), 200
 
     except Exception as e:
         return jsonify({"error": "Error al obtener las solicitudes", "details": str(e)}), 500
+
 
     
 @tareasBP.route('/solicitud', methods=['POST'])
@@ -307,15 +315,10 @@ def crear_solicitud():
             INSERT INTO SOLICITUD_MATERIAL (profesor_id, fecha_entrega, aula)
             VALUES (%s, %s, %s)
         """
-        print("SOLICITUD_MATERIAL Inserta")
         db.execute_query(crear_solicitud_query, (profesor_id, fecha_entrega, aula))
-        print("SOLICITUD_MATERIAL insertada")
-
-        # Obtener el ID de la solicitud recién creada
-        solicitud_id_query = "SELECT LAST_INSERT_ID()"
-
-        solicitud_id = db.fetch_query(solicitud_id_query)[0][0]
-
+        solicitud_id_query = """SELECT LAST_INSERT_ID() AS id"""
+        solicitud_id_result = db.fetch_query(solicitud_id_query)
+        solicitud_id = solicitud_id_result[0]['id']
         # Insertar los detalles de la solicitud y actualizar el almacén
         insertar_detalle_query = """
             INSERT INTO SOLICITUD_MATERIAL_DETALLE (solicitud_id, id_material, cantidad_solicitada)
@@ -333,13 +336,9 @@ def crear_solicitud():
                 return jsonify({"error": "Datos de material incompletos"}), 400
             if cantidad > 0: 
                 # Insertar detalle
-                print("Insertar SOLICITUD_MATERIAL_DETALLE ")
                 db.execute_query(insertar_detalle_query, (solicitud_id, id_material, cantidad))
-                print("SOLICITUD_MATERIAL_DETALLE insertado")
                 # Actualizar almacén
-                print("Actualizar MATERIALES_ALMACEN ")
                 db.execute_query(actualizar_almacen_query, (cantidad, id_material))
-                print("MATERIALES_ALMACEN actualizado")
         return jsonify({"message": "Solicitud creada correctamente", "solicitud_id": solicitud_id}), 201
 
     except Exception as e:
@@ -481,6 +480,20 @@ def obtener_tareas_inventario():
     except Exception as e:
         return jsonify({"error": f"Error al obtener las tareas de inventario: {str(e)}"}), 500
 
+@tareasBP.route('/inventario/<int:id>', methods=['GET'])
+def obtener_tarea(id):
+    """
+    Endpoint para obtener todas las tareas de inventario.
+    """
+    try:
+        query = "SELECT * FROM TAREA_INVENTARIO"
+        tareas_inventario = db.fetch_query(query)
+
+        return jsonify({"tareas_inventario": tareas_inventario}), 200
+
+    except Exception as e:
+        return jsonify({"error": f"Error al obtener las tareas de inventario: {str(e)}"}), 500
+
 @tareasBP.route('/inventario', methods=['POST'])
 def crear_tarea_inventario():
     """
@@ -493,7 +506,6 @@ def crear_tarea_inventario():
     if not all(field in data for field in required_fields):
         missing_fields = [field for field in required_fields if field not in data]
         return jsonify({"error": f"Faltan los siguientes campos: {', '.join(missing_fields)}"}), 400
-    print(data)
     # Asignar valores de los campos recibidos
     fecha_inicio = data.get('fecha_inicio')
     fecha_fin = data.get('fecha_fin')
@@ -614,7 +626,7 @@ def obtener_tareas(id):
                     }
                 })
 
-        print(tareas_totales)
+
         # Verificar si se encontraron tareas
         if not tareas_totales:
             return jsonify({"message": "No se encontraron tareas para este estudiante."}), 200
@@ -625,7 +637,55 @@ def obtener_tareas(id):
         return jsonify({"error": f"Error al obtener las tareas: {str(e)}"}), 500
 
 @tareasBP.route("/materiales/<int:id>", methods=['GET'])
+def obtener_materiales(id):
+    """
+    Endpoint para obtener los materiales asociados a las tareas de inventario de un estudiante,
+    junto con la información del profesor y el aula de la solicitud.
+    """
+    try:
+        # Consulta para obtener los materiales asociados a las tareas de inventario del estudiante
+        query = """
+            SELECT t.aula,
+                    p.nombre AS profesor_nombre, 
+                    m.nombre_material, smd.cantidad_solicitada
+            FROM 
+                TAREA_INVENTARIO t 
+            JOIN SOLICITUD_MATERIAL sm ON sm.id =  t.solicitud_id
+            JOIN USUARIO p ON p.id = sm.profesor_id
+            JOIN SOLICITUD_MATERIAL_DETALLE smd ON smd.solicitud_id = sm.id
+            JOIN MATERIALES_ALMACEN m ON m.id_material = smd.id_material
+            WHERE 
+                t.estudiante_id = %s
+        """
+        
+        # Realizar la consulta para obtener los datos
+        materiales_estudiante = db.fetch_query(query, (id,))
+        
+        # Verificar si no hay materiales asociados a este estudiante
+        if not materiales_estudiante:
+            return jsonify({"message": "No hay materiales asociados a las tareas de este estudiante."}), 404
+        
+        # Organizar los resultados en un formato estructurado
+        materiales_dict = []
+        for material in materiales_estudiante:
+            # Organizar los materiales en el formato deseado
+            materiales_dict.append({
+                "aula": material['aula'],
+                "profesor": material['profesor_nombre'],
+                "material": [{
+                    "nombre": material['nombre_material'],
+                    "cantidad": material['cantidad_solicitada']
+                }]
+            })
+        # Retornar los resultados en formato JSON
+        return jsonify({
+            "materiales": materiales_dict
+        }), 200
 
+    except Exception as e:
+        return jsonify({"error": f"Error al obtener los materiales: {str(e)}"}), 500
+
+    
 def obtener_materiales(id):
     """
     Endpoint para obtener los materiales asociados a las tareas de inventario de un estudiante,
@@ -667,7 +727,6 @@ def obtener_materiales(id):
                 }]
             })
         
-        print(materiales_dict)
         # Retornar los resultados en formato JSON
         return jsonify({
             "materiales": materiales_dict

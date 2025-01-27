@@ -49,9 +49,6 @@ const AñadirMenu = ({route}) => {
             setPictograma(route.params.urlImage);  // Guardamos la imagen seleccionada
         }
     }, [route.params?.urlImage]);
-    useEffect(()=>{
-        console.log(pictograma)
-    }, [pictograma])
     return (
         <Layaout>
             <View style={styles.header}>

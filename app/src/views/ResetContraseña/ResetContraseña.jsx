@@ -34,7 +34,6 @@ const ResetContraseña = ({route}) => {
                 contraseña: password,
                 id: buscarProfesor.id,
             }
-            console.log(profesor)
             const respuesta = await putProfesor(profesor);
             if(respuesta){
                 Alert.alert("Contraseña cambiada exitosamente.");  // Muestra un mensaje de éxito si se cambió la contraseña
@@ -48,7 +47,6 @@ const ResetContraseña = ({route}) => {
         }
     }
     useEffect(() => {
-        console.log(profesores)
         fetchPictograma();  // Ejecuta la función fetchPictograma al cargar el componente
     }, []);  // Se ejecuta solo una vez al cargar el componente
 

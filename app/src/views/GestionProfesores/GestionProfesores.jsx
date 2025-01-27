@@ -37,7 +37,6 @@ const GestionProfesores = () => {
     },[])
     )
     useEffect(()=>{
-        console.log(profesores)
     },[profesores]);
     return(
         <Layaout>

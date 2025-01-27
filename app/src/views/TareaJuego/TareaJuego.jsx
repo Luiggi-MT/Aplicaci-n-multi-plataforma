@@ -47,7 +47,6 @@ const TareaJuego = () => {
             Alert.alert("Error", "Debe introducir un URL válido.");
         }else {
             if(esURL(urlIntroducida)){ 
-                console.log(urlIntroducida);
                 const respuesta = await postTareaJuego(urlIntroducida); 
                 if(respuesta){
                     setUrlJuego(urlIntroducida);

@@ -13,7 +13,6 @@ def crear_tarea_comanda():
     screen = data.get('screen')
     fecha = data.get('fecha_entrega')
     url = data.get('url')
-    print(data)
     # Validaciones básicas
     if  not alumno_id:
         return jsonify({"error": "Datos insuficientes o inválidos"}), 400
@@ -107,9 +106,7 @@ def create_menu():
     params = (nombre, cantidad, url)
 
     try:
-        print("Antes de la query")
         result = db.execute_query(query, params)
-        print("Despues de la query")
         return jsonify({"message": "Menú creado correctamente"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -117,7 +114,10 @@ def create_menu():
 # Obtener todos los menús (READ):
 @comandaBP.route('/menu', methods=['GET'])
 def get_menus():
-    query = "SELECT * FROM MENU"
+    query = """
+            SELECT * 
+            FROM MENUS
+    """
 
     try:
         menus = db.fetch_query(query)
@@ -211,14 +211,8 @@ def get_comandas():
 @comandaBP.route('/comanda/<int:alumno_id>', methods=['GET'])
 def get_comandas_por_alumno(alumno_id):
     query = """
-        SELECT tc.id, tc.aula_id, a.nombre AS aula_nombre, 
-               tc.menu_id, m.nombre AS menu_nombre,
-               tc.alumno_id, u.nombre AS alumno_nombre,
-               tc.cantidad, tc.screen, tc.fecha
+        SELECT *
         FROM TAREA_COMANDAS tc
-        JOIN AULAS a ON tc.aula_id = a.id
-        JOIN MENUS m ON tc.menu_id = m.id
-        JOIN USUARIO u ON tc.alumno_id = u.id
         WHERE tc.alumno_id = %s
     """
     params = (alumno_id,)

@@ -25,6 +25,11 @@
     "web": {
       "favicon": "./assets/GranadAccess.png"
     },
-    "newArchEnabled": true  
+    "newArchEnabled": true,
+    "extra": {
+      "eas": {
+        "projectId": "6448f5d9-7827-424a-b18b-b1f080b64ffd"
+      }
+    }
   }
 }

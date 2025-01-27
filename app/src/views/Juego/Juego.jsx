@@ -7,7 +7,6 @@ import { getTareasJuego } from "../../api/apiTarea";
 
 const Juego = ({route}) => {
     const { alumno } = route.params;  // Obtiene el alumno desde la ruta
-    console
     const [urlAtras, setUrlAtras] = useState(null);
     const [urlJuego, setUrlJuego] = useState(null);
     const pictogramas = {
@@ -31,9 +30,6 @@ const Juego = ({route}) => {
         fetchJuego();
         fetchPictograma();
     },[])
-    useEffect(()=>{
-        console.log("Juego" + urlJuego)
-    }, [urlJuego])
     return(
         <SafeAreaView style={[{backgroundColor: alumno.color_tema}, styles.container]}>
             { urlJuego ? (

@@ -8,13 +8,12 @@ import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 
 const SeleccionarIcono = ({route}) => { 
-    const { name, cantidad } = route.params;
+    let name, cantidad;
     const [urlAtras, setUrlAtras] = useState(null); 
     const [downloadedImage, setDownloadedImage] = useState(null);
     const navigation = useNavigation(); 
 
     useEffect(() => {
-        console.log(route.params)
         const fetchPictogramas = async () => {
             const respuesta = await obtenerPictograma("38249/38249_2500.png");
             if (respuesta) setUrlAtras(respuesta);

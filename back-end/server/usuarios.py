@@ -17,7 +17,7 @@ def obtener_foto_perfil(nombre_usuario):
         else:
             return "https://st3.depositphotos.com/3538469/15750/i/450/depositphotos_157501024-stock-photo-business-man-icon.jpg"
     except Exception as e:
-        print(f"Error al obtener la foto de perfil: {str(e)}")
+        print(f"Error al obtener la foto de perfil: {str(e)}", e)
         return "https://st3.depositphotos.com/3538469/15750/i/450/depositphotos_157501024-stock-photo-business-man-icon.jpg"
 
 
@@ -30,19 +30,18 @@ def obtener_usuarios_por_rol(rol):
 
     if results:
         for result in results:
-            nombre_usuario = result[3] if result[3] else "No disponible"
+            nombre_usuario = result['nombre_usuario'] if result['nombre_usuario'] else "No disponible"
             foto_perfil = obtener_foto_perfil(nombre_usuario)
-
             usuario = {
-                'id': result[0],
-                'nombre': result[1] if result[1] else "No disponible",
-                'apellido': result[2] if result[2] else "No disponible",
+                'id': result['id'],
+                'nombre': result['nombre'] if result['nombre'] else "No disponible",
+                'apellido': result['apellidos'] if result['apellidos'] else "No disponible",
                 'nombre_usuario': nombre_usuario,
-                'contraseña': result[4] if result[4] else "No disponible",
-                'color_tema': result[5] if result[5] else "#FFFFFF",
-                'tamaño_letra': result[6] if result[6] else "14px",
-                'tipo_usuario': result[7],
-                'foto_perfil': foto_perfil
+                'contraseña': result['contraseña'] if result['contraseña'] else "No disponible",
+                'color_tema': result['color_fondo'] if result['color_fondo'] else "#FFFFFF",
+                'tamaño_letra': result['tamaño_letra'] if result['tamaño_letra'] else "14px",
+                'foto_perfil': foto_perfil,
+                'pref_contenido': result['pref_contenido']
             }
             usuarios.append(usuario)
     return usuarios
@@ -108,7 +107,6 @@ def update_profesor(id):
     if 'contraseña' not in data:
         return jsonify({"error": "No hay datos válidos para actualizar"}), 400
     
-    print(data['contraseña'])
     # Construir la consulta para actualizar la contraseña
     update_query = "UPDATE USUARIO SET contraseña = %s WHERE id = %s"
     values = (data['contraseña'], id)
@@ -144,7 +142,7 @@ def put_estudiante(id):
     data = request.get_json()
 
     # Verifica que al menos uno de los campos sea válido para actualizar
-    if not any([data.get(key) for key in ['apellidos', 'color_fondo', 'contraseña', 'foto_perfil', 'id', 'nombre', 'nombre_usuario', 'supervisado_por', 'tamaño_letra', 'tipo_usuario']]):
+    if not any([data.get(key) for key in ['apellidos', 'color_fondo', 'contraseña', 'foto_perfil', 'id', 'nombre', 'nombre_usuario', 'supervisado_por', 'tamaño_letra', 'tipo_usuario', 'pref_contenido']]):
         return jsonify({"error": "No hay datos válidos para actualizar"}), 400
     
     # Construir la consulta dinámica para actualizar solo los campos necesarios
@@ -171,6 +169,9 @@ def put_estudiante(id):
     if data.get('rol'): 
         campos_a_actualizar.append("rol = %s")
         valores.append(data['rol'])
+    if data.get('rol'): 
+        campos_a_actualizar.append("pref_contenido = %s")
+        valores.append(data['pref_contenido'])
     
     # Siempre actualizamos la última actualización
     #ultima_actualizacion = "NOW()"

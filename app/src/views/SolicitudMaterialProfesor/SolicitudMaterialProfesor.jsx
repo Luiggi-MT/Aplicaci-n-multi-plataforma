@@ -113,7 +113,6 @@ const SolicitudMaterial = ({route}) => {
 
                     // Realizar el POST de la solicitud
                     const resp = await postPeticion(reqData);
-                    console.log(resp)
                     if (resp) {
                         Alert.alert("Solicitud enviada correctamente.");
                         setMateriales(nuevosMateriales); // Actualizar las cantidades

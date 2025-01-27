@@ -71,7 +71,7 @@ const GestionInformacion = () => { 
             {/* Título de la pantalla */}
             <View style={styles.header}>
                 {Platform.OS !== 'android' &&
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <TouchableOpacity onPress={() => navigation.navigate("HomeAdmin")}>
                         {urlAtras && <Image source={{ uri: urlAtras }} style={styles.iconBack} />}
                     </TouchableOpacity>
                 }

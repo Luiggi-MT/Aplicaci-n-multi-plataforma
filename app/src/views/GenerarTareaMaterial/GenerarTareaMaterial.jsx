@@ -38,7 +38,6 @@ const GenerarTareaMaterial = ({ route }) => {
     };
 
     useEffect(() => {
-        console.log("GenerarTAreaMaterial: " + solicitud)
         fetchPictogramas();
         fetchEstudiantes();
     }, []);
@@ -48,9 +47,6 @@ const GenerarTareaMaterial = ({ route }) => {
             setSolicitud(route.params.solicitud);
         }
     }, [route.params]);
-    useEffect(()=>{
-        console.log(solicitud)
-    },[solicitud])
 
     const handleSumbitPress = async (alumno) => {
         if (alumno) {
@@ -66,7 +62,6 @@ const GenerarTareaMaterial = ({ route }) => {
                 screen: "Inventario",
                 url: urlInventario,
             }
-            console.log(datosSolicitud)
             const data = await postTareaInventario(datosSolicitud)
             if (data) {
                 Alert.alert("Tarea enviada correctamente.");

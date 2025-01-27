@@ -164,13 +164,9 @@ CREATE TABLE `USUARIO` (
   `contraseña` varchar(255) DEFAULT NULL,
   `color_fondo` varchar(20) DEFAULT NULL,
   `tamaño_letra` varchar(20) DEFAULT NULL,
-  `rol` enum('ADMINISTRADOR','ESTUDIANTE','PROFESOR') NOT NULL
+  `rol` enum('ADMINISTRADOR','ESTUDIANTE','PROFESOR') NOT NULL,
+  `pref_contenido` enum('TEXTO', 'AUDIO', 'VIDEO', 'PICTOGRAMAS') DEFAULT 'PICTOGRAMAS' NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
---
--- Estructura de tabla para la tabla `SOLICITUD_MATERIAL`
---
 
 
 
@@ -178,9 +174,43 @@ CREATE TABLE `USUARIO` (
 -- Volcado de datos para la tabla `USUARIO`
 --
 
-INSERT INTO `USUARIO` (`id`, `nombre`, `apellidos`, `nombre_usuario`, `contraseña`, `color_fondo`, `tamaño_letra`, `rol`) VALUES
+INSERT INTO `USUARIO` (`id`, `nombre`, `apellidos`, `nombre_usuario`, `contraseña`, `color_fondo`, `tamaño_letra`, `rol`) 
+VALUES
+
 (1, 'Alberto', 'Gracian', 'a', '1', 'azul', '12', 'ADMINISTRADOR'),
-(2, 'Julia', 'Hurtado', 'p', '1', 'azul', '12', 'PROFESOR');
+(2, 'Julia', 'Hurtado', 'p', '1', 'azul', '12', 'PROFESOR'),
+(5, 'Carlos', 'Sanchez', 's1', 'a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-', '#FF5733', '16', 'ESTUDIANTE'),
+(6, 'Marta', 'Lopez', 's2', 'a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-', '#33FF57', '17', 'ESTUDIANTE'),
+(7, 'Luis', 'Perez', 's3', 'a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-', '#3357FF', '18', 'ESTUDIANTE'),
+(8, 'Ana', 'Gomez', 's4', 'a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-', '#57FF33', '19', 'ESTUDIANTE'),
+(9, 'Pedro', 'Torres', 's5', 'a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-', '#FF33A1', '20', 'ESTUDIANTE'),
+(10, 'Sofia', 'Martinez', 's6', 'a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-', '#A133FF', '21', 'ESTUDIANTE'),
+(11, 'Rosa', 'Diaz', 's7', 'a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-a1b2c3-', '#33FFA1', '22', 'ESTUDIANTE'),
+(12, 'Diego', 'Castro', 's8', 'a1b2c3-008', '#FFA133', '23', 'ESTUDIANTE'),
+(13, 'Laura', 'Hernandez', 's9', 'a1b2c3-009', '#FF5733', '24', 'ESTUDIANTE'),
+(14, 'Jorge', 'Moreno', 's10', 'a1b2c3-010', '#33FF57', '25', 'ESTUDIANTE'),
+(15, 'Elena', 'Vazquez', 's11', 'a1b2c3-011', '#3357FF', '16', 'ESTUDIANTE'),
+(16, 'Raul', 'Navarro', 's12', 'a1b2c3-012', '#57FF33', '17', 'ESTUDIANTE'),
+(17, 'Isabel', 'Ruiz', 's13', 'a1b2c3-013', '#FF33A1', '18', 'ESTUDIANTE'),
+(18, 'Manuel', 'Ortega', 's14', 'a1b2c3-014', '#A133FF', '19', 'ESTUDIANTE'),
+(19, 'Teresa', 'Ramos', 's15', 'a1b2c3-015', '#33FFA1', '20', 'ESTUDIANTE'),
+(20, 'Pablo', 'Garrido', 's16', 'a1b2c3-016', '#FFA133', '21', 'ESTUDIANTE'),
+(21, 'Carmen', 'Silva', 's17', 'a1b2c3-017', '#FF5733', '22', 'ESTUDIANTE'),
+(22, 'Sergio', 'Mendoza', 's18', 'a1b2c3-018', '#33FF57', '23', 'ESTUDIANTE'),
+(23, 'Lucia', 'Flores', 's19', 'a1b2c3-019', '#3357FF', '24', 'ESTUDIANTE'),
+(24, 'Francisco', 'Campos', 's20', 'a1b2c3-020', '#57FF33', '25', 'ESTUDIANTE'),
+(25, 'Beatriz', 'Reyes', 's21', 'a1b2c3-021', '#FF33A1', '16', 'ESTUDIANTE'),
+(26, 'Hugo', 'Iglesias', 's22', 'a1b2c3-022', '#A133FF', '17', 'ESTUDIANTE'),
+(27, 'Clara', 'Santana', 's23', 'a1b2c3-023', '#33FFA1', '18', 'ESTUDIANTE'),
+(28, 'Juan', 'Blanco', 's24', 'a1b2c3-024', '#FFA133', '19', 'ESTUDIANTE'),
+(29, 'Alba', 'Luna', 's25', 'a1b2c3-025', '#FF5733', '20', 'ESTUDIANTE'),
+(30, 'Victor', 'Salas', 's26', 'a1b2c3-026', '#33FF57', '21', 'ESTUDIANTE'),
+(31, 'Noelia', 'Padilla', 's27', 'a1b2c3-027', '#3357FF', '22', 'ESTUDIANTE'),
+(32, 'Adrian', 'Gil', 's28', 'a1b2c3-028', '#57FF33', '23', 'ESTUDIANTE'),
+(33, 'Paula', 'Fuentes', 's29', 'a1b2c3-029', '#FF33A1', '24', 'ESTUDIANTE'),
+(34, 'Rafael', 'Lozano', 's30', 'a1b2c3-030', '#A133FF', '25', 'ESTUDIANTE');
+
+UPDATE `USUARIO` SET pref_contenido = "VIDEO" WHERE id = 5;
 
 --
 -- Índices para tablas volcadas
@@ -354,7 +384,9 @@ COMMIT;
 
 
 
-
+--
+-- Estructura de tabla para la tabla `SOLICITUD_MATERIAL`
+--
 CREATE TABLE SOLICITUD_MATERIAL (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `profesor_id` INT NOT NULL,
@@ -422,7 +454,9 @@ CREATE TABLE TAREA_INVENTARIO (
     fecha_inicio TIMESTAMP DEFAULT CURRENT_TIMESTAMP(), -- Fecha de creación de la tarea
     fecha_fin TIMESTAMP,                        -- Fecha de culminación de la tarea
     estado ENUM('Pendiente', 'En progreso', 'Finalizada') DEFAULT 'Pendiente', -- Estado de la tarea
-    prioridad ENUM('ALTA', 'MEDIA', 'BAJA') DEFAULT 'MEDIA',
+    prioridad ENUM('ALTA', 'MEDIA', 'BAJA') DEFAULT 'MEDIA',   
+    /* CONSTRAINT fk_estudiante FOREIGN KEY (estudiante_id) REFERENCES USUARIO(id), -- Relación con tabla de estudiantes
+    CONSTRAINT fk_tarea FOREIGN KEY (id) REFERENCES TAREA(id) -- Relación con tabla */
     FOREIGN KEY (estudiante_id) REFERENCES USUARIO(id), 
     FOREIGN KEY (solicitud_id) REFERENCES SOLICITUD_MATERIAL(id) -- Relación con SOLICITUD_MATERIAL 
 );
@@ -440,22 +474,209 @@ CREATE TABLE MATERIAL_TAREA (
 
 
 
-CREATE TABLE MENU (
+--
+-- Tablas nuevas necesarias para las tareas de comandas de comedor:
+--
+CREATE TABLE AULAS (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
-    url VARCHAR(100) NOT NULL,
-    cantidad INT NOT NULL
+    nombre VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE TAREA_COMANDAS (
+CREATE TABLE MENUS (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    cantidad INT NOT NULL,
+    imagen_url VARCHAR(255)
+);
+
+
+
+CREATE TABLE TAREA_COMANDAS (
     alumno_id INT NOT NULL,
     screen VARCHAR(100) NOT NULL,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     url VARCHAR(100) NOT NULL, 
-    FOREIGN KEY (menu_id) REFERENCES MENU(id),
     FOREIGN KEY (alumno_id) REFERENCES USUARIO(id)
 );
+
+--
+-- Añadir algunas tuplas de las tablas anteriores para poder hacer pruebas:
+--
+INSERT INTO AULAS (nombre)
+VALUES 
+('A'),
+('B'),
+('C');
+
+INSERT INTO MENUS (nombre, descripcion, imagen_url)
+VALUES 
+('Menú vegetal', 'Menú vegetal estándar con verdura variada', 'https://content-cocina.lecturas.com/medio/2022/04/27/ensalada-de-garbanzos-con-vegetales-frescos_162a00b3_900x900.jpg'),
+('Menú especial carne', 'Menú especial de carne para personas con celiaquía', 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/77/be/07/para-los-mas-carnivoros.jpg?w=900&h=500&s=1'),
+('Menú pasta', 'Menú de pasta básica', 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7GXzkcta4h19yO7T1dWIl778cqQaEM4bYcj_Xdb1LPA6Gxxqv9o5s4YEJnSHwUXRJAvI_1tJHkftUzj9OlOBOIH0zggrwFJiniTUl8k_otBbdifHSpZweacjgYM8LX7m018WVa1fhTMo/s1600/DSCF2863.JPG');
+
+/* INSERT INTO TAREA_COMANDAS (aula_id, menu_id, alumno_id, cantidad)
+VALUES 
+(1, 1, 3, 3),
+(2, 2, 3, 1),
+(3, 3, 4, 2); */
+
+
+
+--
+-- Tablas necesarias para las tareas por pasos:
+--
+
+-- Tasks: contiene las tareas (he creado esta otra porque la tabla 'Tarea' y 
+-- esta no van a tener los mismos atributos y saldrán errores).
+CREATE TABLE Tasks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    due_date DATE, -- Fecha límite para completar la tarea
+    priority ENUM('low', 'medium', 'high') DEFAULT 'medium', -- Prioridad de la tarea
+    status ENUM('in_progress', 'completed', 'not_started') DEFAULT 'not_started', -- Estado de la tarea
+    student_id INT NOT NULL, -- Identificador del estudiante asociado a la tarea
+    image_url VARCHAR(2083), -- Campo para almacenar la URL de la imagen representativa
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Steps: contiene los pasos de cada tarea.
+CREATE TABLE Steps (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    task_id INT NOT NULL,
+    `order` INT NOT NULL,
+    content TEXT NOT NULL,
+    status ENUM('completed', 'not_started') DEFAULT 'not_started',
+    audio_url VARCHAR(2083) DEFAULT NULL,
+    video_url VARCHAR(2083) DEFAULT NULL,
+    pictogram_url VARCHAR(2083) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (task_id) REFERENCES Tasks(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- Insertar algunas tareas por pasos variadas:
+INSERT INTO Tasks (name, description, due_date, priority, status, student_id, image_url)
+VALUES
+-- Tarea 1: Calentar comida en el microondas
+('Calentar comida en el microondas', 
+ 'Selecciona un recipiente adecuado, colócalo en el microondas, ajusta el tiempo y espera hasta que esté caliente', 
+ '2024-12-20', 
+ 'medium', 
+ 'in_progress', 
+ 5, 
+ 'microondas.png'),
+
+-- Tarea 2: Doblar una camiseta
+('Doblar una camiseta', 
+ 'Coloca la camiseta en una superficie plana y sigue los pasos para doblarla correctamente', 
+ '2024-12-21', 
+ 'low', 
+ 'not_started', 
+ 5, 
+ 'camiseta_manga_larga.png'),
+
+-- Tarea 3: Llenar un vaso de agua
+('Llenar un vaso de agua', 
+ 'Toma un vaso limpio, acércalo al grifo, ábrelo con cuidado y llena el vaso sin derramar', 
+ '2024-12-22', 
+ 'low', 
+ 'not_started', 
+ 5, 
+ 'vaso_agua.png'),
+
+-- Tarea 4: Organizar la mochila
+('Organizar la mochila', 
+ 'Revisa la lista de materiales necesarios y coloca cada objeto en el lugar correcto dentro de la mochila', 
+ '2024-12-23', 
+ 'medium', 
+ 'not_started', 
+ 5, 
+ 'mochila.png'),
+
+-- Tarea 5: Recoger la mesa después de comer
+('Recoger la mesa después de comer', 
+ 'Recoge los platos, cubiertos y vasos usados. Llévalos a la cocina y colócalos en el fregadero', 
+ '2024-12-24', 
+ 'medium', 
+ 'not_started', 
+ 5, 
+ 'sentado_en_la_mesa.png'),
+
+-- Tarea 6: Regar una planta
+('Regar una planta', 
+ 'Toma la regadera, llénala con agua y vierte la cantidad adecuada en la maceta de la planta', 
+ '2024-12-25', 
+ 'low', 
+ 'not_started', 
+ 5, 
+ 'regar.png'),
+
+-- Tarea 7: Lavar los platos
+('Lavar los platos', 
+ 'Recoge los platos sucios, lávalos con esponja y jabón, y enjuágalos bajo el grifo', 
+ '2024-12-26', 
+ 'high', 
+ 'not_started', 
+ 5, 
+ 'lavar_platos.png');
+
+
+
+
+-- Insertar los pasos de las tareas anteriores:
+-- Pasos para "Calentar comida en el microondas" (task_id = 1)
+INSERT INTO Steps (task_id, `order`, content, status, audio_url, video_url, pictogram_url)
+VALUES
+(1, 1, 'Abre la puerta del microondas', 'in_progress', 'audio_example.mp3', 'https://www.youtube.com/shorts/BW1tMNI4C5U?feature=share', 'microondas.png'),
+(1, 2, 'Coloca el recipiente en el centro del microondas', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/BW1tMNI4C5U?feature=share', 'microondas.png'),
+(1, 3, 'Cierra la puerta del microondas', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/BW1tMNI4C5U?feature=share', 'microondas.png'),
+(1, 4, 'Selecciona el tiempo y pulsa el botón de inicio', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/BW1tMNI4C5U?feature=share', 'microondas.png'),
+(1, 5, 'Espera a que termine el tiempo y abre la puerta', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/BW1tMNI4C5U?feature=share', 'microondas.png'),
+(1, 6, 'Saca el recipiente con cuidado', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/BW1tMNI4C5U?feature=share', 'microondas.png'),
+
+-- Pasos para "Doblar una camiseta" (task_id = 2)
+(2, 1, 'Extiende la camiseta sobre una superficie plana', 'not_started', 'audio_example.mp3', 'https://youtu.be/fyO19ONc1SA', 'camiseta_manga_larga.png'),
+(2, 2, 'Dobla una de las mangas hacia el centro', 'not_started', 'audio_example.mp3', 'https://youtu.be/fyO19ONc1SA', 'camiseta_manga_larga.png'),
+(2, 3, 'Dobla la otra manga hacia el centro', 'not_started', 'audio_example.mp3', 'https://youtu.be/fyO19ONc1SA', 'camiseta_manga_larga.png'),
+(2, 4, 'Dobla la parte inferior hacia arriba hasta el cuello', 'not_started', 'audio_example.mp3', 'https://youtu.be/fyO19ONc1SA', 'camiseta_manga_larga.png'),
+(2, 5, 'Acomoda la camiseta para que quede uniforme', 'not_started', 'audio_example.mp3', 'https://youtu.be/fyO19ONc1SA', 'camiseta_manga_larga.png'),
+
+-- Pasos para "Llenar un vaso de agua" (task_id = 3)
+(3, 1, 'Toma un vaso limpio de la alacena', 'not_started', 'audio_example.mp3', 'https://youtu.be/l-xtmCqouG4', 'vaso_agua.png'),
+(3, 2, 'Llévalo hasta el fregadero', 'not_started', 'audio_example.mp3', 'https://youtu.be/l-xtmCqouG4', 'vaso_agua.png'),
+(3, 3, 'Abre el grifo de agua con cuidado', 'not_started', 'audio_example.mp3', 'https://youtu.be/l-xtmCqouG4', 'vaso_agua.png'),
+(3, 4, 'Llena el vaso hasta la mitad o tres cuartos', 'not_started', 'audio_example.mp3', 'https://youtu.be/l-xtmCqouG4', 'vaso_agua.png'),
+(3, 5, 'Cierra el grifo y coloca el vaso en la mesa', 'not_started', 'audio_example.mp3', 'https://youtu.be/l-xtmCqouG4', 'vaso_agua.png'),
+
+-- Pasos para "Organizar la mochila" (task_id = 4)
+(4, 1, 'Saca todos los objetos de la mochila', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/IheOI1PuCBE?feature=share', 'mochila.png'),
+(4, 2, 'Organiza los útiles por categorías (libros, cuadernos, lápices)', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/IheOI1PuCBE?feature=share', 'mochila.png'),
+(4, 3, 'Coloca los objetos más grandes primero', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/IheOI1PuCBE?feature=share', 'mochila.png'),
+(4, 4, 'Añade los objetos más pequeños en los bolsillos', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/IheOI1PuCBE?feature=share', 'mochila.png'),
+(4, 5, 'Revisa que todo lo necesario esté dentro', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/IheOI1PuCBE?feature=share', 'mochila.png'),
+
+-- Pasos para "Recoger la mesa después de comer" (task_id = 5)
+(5, 1, 'Levanta los platos y cubiertos de la mesa', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/juneGP2DC4k?feature=share', 'sentado_en_la_mesa.png'),
+(5, 2, 'Llévalos a la cocina', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/juneGP2DC4k?feature=share', 'sentado_en_la_mesa.png'),
+(5, 4, 'Revisa si quedó algo en la mesa y recógelo', 'not_started', 'audio_example.mp3', 'https://www.youtube.com/shorts/juneGP2DC4k?feature=share', 'sentado_en_la_mesa.png'),
+
+-- Pasos para "Regar una planta" (task_id = 6)
+(6, 1, 'Toma la regadera y llénala con agua', 'not_started', 'audio_example.mp3', 'https://youtu.be/KQ3pJfF3ZiY', 'regar.png'),
+(6, 2, 'Lleva la regadera a la planta', 'not_started', 'audio_example.mp3', 'https://youtu.be/KQ3pJfF3ZiY', 'regar.png'),
+(6, 3, 'Vierte el agua lentamente sobre la maceta', 'not_started', 'audio_example.mp3', 'https://youtu.be/KQ3pJfF3ZiY', 'regar.png'),
+(6, 4, 'Revisa que la planta no esté encharcada', 'not_started', 'audio_example.mp3', 'https://youtu.be/KQ3pJfF3ZiY', 'regar.png'),
+
+-- Pasos para "Lavar los platos" (task_id = 7)
+(7, 1, 'Recoge todos los platos sucios de la mesa', 'not_started', 'audio_example.mp3', 'https://youtu.be/pvNv5aMYmDY', 'lavar_platos.png'),
+(7, 2, 'Llena el fregadero con agua tibia y un poco de jabón', 'not_started', 'audio_example.mp3', 'https://youtu.be/pvNv5aMYmDY', 'lavar_platos.png'),
+(7, 3, 'Toma una esponja y frota los platos con jabón', 'not_started', 'audio_example.mp3', 'https://youtu.be/pvNv5aMYmDY', 'lavar_platos.png'),
+(7, 4, 'Enjuaga los platos bajo el grifo hasta que no quede jabón', 'not_started', 'audio_example.mp3', 'https://youtu.be/pvNv5aMYmDY', 'lavar_platos.png'),
+(7, 5, 'Coloca los platos limpios en el escurridor para que se sequen', 'not_started', 'audio_example.mp3', 'https://youtu.be/pvNv5aMYmDY', 'lavar_platos.png');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

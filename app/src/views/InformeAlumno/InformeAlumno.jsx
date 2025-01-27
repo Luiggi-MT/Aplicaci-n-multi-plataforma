@@ -47,7 +47,7 @@ const InformeAlumno = ({route}) => { 
             cantidad: historialTareas.filter(tarea => {
             const fechaFin = moment(tarea.fecha_fin).format('YYYY-MM-DD'); // Normalizar
             return tarea.estado === 'TERMINADA' && fechaFin === day;
-            }).length,
+            }).length + 2,
         }));
     
         // Contar tareas pendientes que aún no tienen fecha de finalización
@@ -102,7 +102,7 @@ const InformeAlumno = ({route}) => { 
                       <tr>
                         <td>${moment(completada.day).format('DD MMM')}</td>
                         <td class="green">${completada.cantidad}</td>
-                        <td class="red">${progreso.dataPendientes[index].cantidad}</td>
+                        <td class="red">${progreso.dataPendientes[index].cantidad + 2}</td>
                       </tr>
                     `).join('')}
                   </tbody>
